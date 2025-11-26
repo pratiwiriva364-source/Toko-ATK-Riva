@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Riva Stationery - Toko Alat Tulis Kantor Online Terlengkap dan Termurah">
+    <meta name="keywords" content="atk, alat tulis, toko online, stationery, perlengkapan kantor">
+    <title>Riva Stationery - Toko Alat Tulis Kantor Online</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .header-contact {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .wa-button {
+            background: #25D366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .wa-button:hover {
+            background: #1fb855;
+            transform: translateY(-2px);
+        }
+
+        .cart-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .cart-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .search-bar {
+            margin: 20px 0;
+            width: 100%;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .categories {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .product-price {
+            font-size: 22px;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #764ba2;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .qty-btn:hover {
+            background: #764ba2;
+        }
+
+        .cart-total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            text-align: right;
+        }
+
+        .total-label {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .total-amount {
+            font-size: 28px;
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .form-alamat {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .form-alamat h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .checkout-btn:hover {
+            background: #1fb855;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        footer {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+        }
+
+        .wa-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.5);
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .wa-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .logo {
+                font-size: 22px;
+            }
+
+            .header-contact {
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">📚 Riva Stationery</div>
+            <div class="header-contact">
+                <a href="https://wa.me/6283168459539?text=Halo%20Riva%20Stationery,%20saya%20mau%20bertanya" class="wa-button" target="_blank">
+                    📱 Hubungi Kami
+                </a>
+                <button class="cart-btn" onclick="toggleCart()">
+                    🛒 Keranjang
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="🔍 Cari produk ATK..." onkeyup="searchProducts()">
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active" onclick="filterCategory('all')">Semua</button>
+            <button class="category-btn" onclick="filterCategory('tulis')">Alat Tulis</button>
+            <button class="category-btn" onclick="filterCategory('kertas')">Kertas & Buku</button>
+            <button class="category-btn" onclick="filterCategory('kantor')">Perlengkapan Kantor</button>
+            <button class="category-btn" onclick="filterCategory('arsip')">Arsip & File</button>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+
+        <footer>
+            <p>© 2025 Riva Stationery - Toko Alat Tulis Kantor Online</p>
+            <p>📞 Hubungi: 0831-6845-9539 | 📧 Email: info@pratiwiriva364gmail.com</p>
+        </footer>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/6283168459539?text=Halo%20Riva%20Stationery,%20saya%20mau%20bertanya" class="wa-float" target="_blank">
+        📱
+    </a>
+
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Keranjang Belanja</div>
+                <button class="close-btn" onclick="toggleCart()">&times;</button>
+            </div>
+            <div id="cartItems"></div>
+            <div class="cart-total">
+                <div class="total-label">Total:</div>
+                <div class="total-amount" id="totalAmount">Rp 0</div>
+            </div>
+            
+            <div class="form-alamat">
+                <h3>📍 Informasi Pengiriman</h3>
+                <div class="form-group">
+                    <label>Nama Lengkap *</label>
+                    <input type="text" id="namaLengkap" placeholder="Masukkan nama lengkap" required>
+                </div>
+                <div class="form-group">
+                    <label>No. WhatsApp *</label>
+                    <input type="tel" id="noTelepon" placeholder="08xx xxxx xxxx" required>
+                </div>
+                <div class="form-group">
+                    <label>Alamat Lengkap *</label>
+                    <textarea id="alamatLengkap" placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kota" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Catatan (Opsional)</label>
+                    <textarea id="catatan" placeholder="Catatan tambahan untuk pesanan"></textarea>
+                </div>
+            </div>
+            
+            <button class="checkout-btn" onclick="checkout()">
+                📱 Pesan via WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // GANTI NOMOR WHATSAPP DI SINI (format: 628xxxxxxxxxx tanpa tanda +)
+        const WHATSAPP_NUMBER = '6283168459539'; // Ganti dengan nomor WA Anda
+
+        const products = [
+            {id: 1, name: 'Pulpen Standard AE7', category: 'tulis', price: 3000, icon: '🖊️'},
+            {id: 2, name: 'Pensil 2B Faber Castell', category: 'tulis', price: 5000, icon: '✏️'},
+            {id: 3, name: 'Penghapus Putih', category: 'tulis', price: 2000, icon: '🧽'},
+            {id: 4, name: 'Penggaris 30cm', category: 'tulis', price: 4000, icon: '📏'},
+            {id: 5, name: 'Buku Tulis 38 Lembar', category: 'kertas', price: 8000, icon: '📓'},
+            {id: 6, name: 'Kertas HVS A4 Ream', category: 'kertas', price: 45000, icon: '📄'},
+            {id: 7, name: 'Spidol Board Marker', category: 'tulis', price: 12000, icon: '🖍️'},
+            {id: 8, name: 'Stabilo Highlighter', category: 'tulis', price: 15000, icon: '✨'},
+            {id: 9, name: 'Gunting Kertas', category: 'kantor', price: 10000, icon: '✂️'},
+            {id: 10, name: 'Lem Kertas Stick', category: 'kantor', price: 6000, icon: '🔗'},
+            {id: 11, name: 'Stapler HD-10', category: 'kantor', price: 25000, icon: '📎'},
+            {id: 12, name: 'Isi Staples No.10', category: 'kantor', price: 3000, icon: '📍'},
+            {id: 13, name: 'Map Plastik L', category: 'arsip', price: 2500, icon: '📁'},
+            {id: 14, name: 'Ordner Folio', category: 'arsip', price: 35000, icon: '📚'},
+            {id: 15, name: 'Amplop Coklat', category: 'kertas', price: 1500, icon: '✉️'},
+            {id: 16, name: 'Post-it Notes', category: 'kertas', price: 18000, icon: '📝'},
+        ];
+
+        let cart = {};
+        let currentFilter = 'all';
+
+        function displayProducts(productsToShow) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            
+            productsToShow.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-img">${p.icon}</div>
+                    <div class="product-category">${getCategoryName(p.category)}</div>
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-price">Rp ${p.price.toLocaleString('id-ID')}</div>
+                    <button class="add-to-cart" onclick="addToCart(${p.id})">Tambah ke Keranjang</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function getCategoryName(cat) {
+            const names = {
+                'tulis': 'Alat Tulis',
+                'kertas': 'Kertas & Buku',
+                'kantor': 'Perlengkapan Kantor',
+                'arsip': 'Arsip & File'
+            };
+            return names[cat] || cat;
+        }
+
+        function filterCategory(cat) {
+            currentFilter = cat;
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const filtered = cat === 'all' ? products : products.filter(p => p.category === cat);
+            displayProducts(filtered);
+        }
+
+        function searchProducts() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            let filtered = currentFilter === 'all' ? products : products.filter(p => p.category === currentFilter);
+            filtered = filtered.filter(p => p.name.toLowerCase().includes(search));
+            displayProducts(filtered);
+        }
+
+        function addToCart(id) {
+            if (cart[id]) {
+                cart[id]++;
+            } else {
+                cart[id] = 1;
+            }
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const count = Object.values(cart).reduce((a, b) => a + b, 0);
+            document.getElementById('cartCount').textContent = count;
+            
+            const cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = '';
+            
+            if (count === 0) {
+                cartItems.innerHTML = '<div class="empty-cart">Keranjang kosong</div>';
+                document.getElementById('totalAmount').textContent = 'Rp 0';
+                return;
+            }
+            
+            let total = 0;
+            for (let id in cart) {
+                const product = products.find(p => p.id == id);
+                const qty = cart[id];
+                const subtotal = product.price * qty;
+                total += subtotal;
+                
+                const item = document.createElement('div');
+                item.className = 'cart-item';
+                item.innerHTML = `
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${product.icon} ${product.name}</div>
+                        <div class="cart-item-price">Rp ${product.price.toLocaleString('id-ID')} x ${qty}</div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button class="qty-btn" onclick="changeQty(${id}, -1)">-</button>
+                        <span>${qty}</span>
+                        <button class="qty-btn" onclick="changeQty(${id}, 1)">+</button>
+                    </div>
+                `;
+                cartItems.appendChild(item);
+            }
+            
+            document.getElementById('totalAmount').textContent = 'Rp ' + total.toLocaleString('id-ID');
+        }
+
+        function changeQty(id, delta) {
+            cart[id] += delta;
+            if (cart[id] <= 0) {
+                delete cart[id];
+            }
+            updateCartDisplay();
+        }
+
+        function toggleCart() {
+            document.getElementById('cartModal').classList.toggle('active');
+        }
+
+        function checkout() {
+            const count = Object.values(cart).reduce((a, b) => a + b, 0);
+            if (count === 0) {
+                alert('Keranjang masih kosong!');
+                return;
+            }
+            
+            // Ambil data form
+            const nama = document.getElementById('namaLengkap').value.trim();
+            const telepon = document.getElementById('noTelepon').value.trim();
+            const alamat = document.getElementById('alamatLengkap').value.trim();
+            const catatan = document.getElementById('catatan').value.trim();
+            
+            // Validasi form
+            if (!nama || !telepon || !alamat) {
+                alert('⚠️ Mohon lengkapi Nama, No. WhatsApp, dan Alamat');
+                return;
+            }
+            
+            // Validasi nomor telepon
+            if (!/^08\d{8,11}$/.test(telepon)) {
+                alert('⚠️ Format nomor WhatsApp tidak valid. Gunakan format: 08xxxxxxxxxx');
+                return;
+            }
+            
+            // Buat pesan WhatsApp
+            let message = `*PESANAN BARU - RIVA STATIONERY*\n\n`;
+            message += `📋 *DETAIL PESANAN:*\n`;
+            message += `━━━━━━━━━━━━━━━━━━━━━\n`;
+            
+            let total = 0;
+            for (let id in cart) {
+                const product = products.find(p => p.id == id);
+                const qty = cart[id];
+                const subtotal = product.price * qty;
+                total += subtotal;
+                message += `${product.icon} *${product.name}*\n`;
+                message += `   ${qty} x Rp ${product.price.toLocaleString('id-ID')} = Rp ${subtotal.toLocaleString('id-ID')}\n\n`;
+            }
+            
+            message += `━━━━━━━━━━━━━━━━━━━━━\n`;
+            message += `💰 *TOTAL: Rp ${total.toLocaleString('id-ID')}*\n\n`;
+            
+            message += `👤 *DATA PEMESAN:*\n`;
+            message += `Nama: ${nama}\n`;
+            message += `WhatsApp: ${telepon}\n\n`;
+            
+            message += `📍 *ALAMAT PENGIRIMAN:*\n`;
+            message += `${alamat}\n\n`;
+            
+            if (catatan) {
+                message += `📝 *CATATAN:*\n`;
+                message += `${catatan}\n\n`;
+            }
+            
+            message += `━━━━━━━━━━━━━━━━━━━━━\n`;
+            message += `Terima kasih telah berbelanja di Riva Stationery! 🙏`;
+            
+            // Encode pesan untuk URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Buka WhatsApp dengan pesan
+            const waURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            window.open(waURL, '_blank');
+            
+            // Reset form dan keranjang
+            cart = {};
+            updateCartDisplay();
+            document.getElementById('namaLengkap').value = '';
+            document.getElementById('noTelepon').value = '';
+            document.getElementById('alamatLengkap').value = '';
+            document.getElementById('catatan').value = '';
+            toggleCart();
+            
+            alert('✅ Pesanan Anda akan dikirim ke WhatsApp!\n\nSilakan lanjutkan chat untuk konfirmasi pembayaran.');
+        }
+
+        // Initialize
+        displayProducts(products);
+    </script>
+</body>
+</html>
